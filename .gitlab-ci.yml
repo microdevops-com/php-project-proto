@@ -1,0 +1,114 @@
+stages:
+  - check_req_vars
+  - base_image_fpm
+  - base_image_composer
+  - base_image_dev
+  - app_image
+  - app_test
+  - app_deploy
+
+variables:
+  GIT_SUBMODULE_STRATEGY: normal
+  DEPLOY_TO: proto
+  ENV_URL: $DEPLOY_URL
+  PHP_VER: "7.3"
+  DOCKER_REGISTRY_PORT: ":5001"
+
+before_script:
+  - . .gitlab-ci-functions/docker.sh
+  - . .gitlab-ci-functions/salt.sh
+  - registry_login
+
+.base_image:
+  tags:
+    - __RUNNER_TAG__
+  script:
+    - docker_build_dir_args $IMAGE $DOCKER_PATH "--build-arg CI_COMMIT_REF_SLUG=$CI_COMMIT_REF_SLUG --build-arg CI_SERVER_HOST=$CI_SERVER_HOST --build-arg CI_PROJECT_PATH=$CI_PROJECT_PATH --build-arg PHP_VER=$PHP_VER --build-arg DOCKER_REGISTRY_PORT=$DOCKER_REGISTRY_PORT"
+    - docker push $IMAGE
+
+base_image_fpm:
+  variables:
+    IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH/php${PHP_VER}-fpm:$CI_COMMIT_REF_SLUG
+    DOCKER_PATH: .docker/php${PHP_VER}-fpm/
+  stage: base_image_fpm
+  extends: .base_image
+
+base_image_composer:
+  variables:
+    IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH/php${PHP_VER}-composer:$CI_COMMIT_REF_SLUG
+    DOCKER_PATH: .docker/php${PHP_VER}-composer/
+  stage: base_image_composer
+  extends: .base_image
+
+base_image_dev:
+  variables:
+    IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH/php${PHP_VER}-dev:$CI_COMMIT_REF_SLUG
+    DOCKER_PATH: .docker/php${PHP_VER}-dev/
+  stage: base_image_dev
+  extends: .base_image
+
+.app_image:
+  tags:
+    - __RUNNER_TAG__
+  stage: app_image
+  script:
+    - docker_build_file_args $IMAGE $DOCKER_FILE "--build-arg CI_COMMIT_REF_SLUG=$CI_COMMIT_REF_SLUG --build-arg CI_SERVER_HOST=$CI_SERVER_HOST --build-arg CI_PROJECT_PATH=$CI_PROJECT_PATH --build-arg PHP_VER=$PHP_VER --build-arg DOCKER_REGISTRY_PORT=$DOCKER_REGISTRY_PORT"
+    - docker push $IMAGE
+
+app_test:
+  variables:
+    IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH/app_test:$CI_COMMIT_REF_SLUG
+    DOCKER_FILE: .docker/app_test/Dockerfile
+  extends: .app_image
+
+app_dev:
+  variables:
+    IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH/app_dev:$CI_COMMIT_REF_SLUG
+    DOCKER_FILE: .docker/app_dev/Dockerfile
+  extends: .app_image
+
+app_prod:
+  variables:
+    IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH/app_prod:$CI_COMMIT_REF_SLUG
+    DOCKER_FILE: .docker/app_prod/Dockerfile
+  extends: .app_image
+
+.test_app_test:
+  tags:
+    - __RUNNER_TAG__
+  variables:
+    IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH/app_test:$CI_COMMIT_REF_SLUG
+  stage: app_test
+
+lint_yaml:
+  extends: .test_app_test
+  script:
+    - docker run --rm -t $IMAGE bin/console lint:yaml config
+
+composer_validate:
+  extends: .test_app_test
+  script:
+    - docker run --rm -t $IMAGE composer validate --no-check-publish
+
+simple_phpunit:
+  extends: .test_app_test
+  script:
+    - docker run --rm -t $IMAGE ./bin/phpunit
+
+.deploy_app:
+  tags:
+    - __RUNNER_TAG__
+  stage: app_deploy
+  when: manual
+  script:
+    - if [ -n "$DEPLOY_SERVER" ]; then true; else false; fi
+    - if [ -n "$DEPLOY_URL" ]; then true; else false; fi
+    - salt_call_deploy $DEPLOY_SERVER $IMAGE
+
+deploy_app_proto:
+  environment:
+    name: proto
+    url: $DEPLOY_URL
+  variables:
+    IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH/app_dev:$CI_COMMIT_REF_SLUG
+  extends: .deploy_app

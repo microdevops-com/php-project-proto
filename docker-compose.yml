@@ -1,0 +1,73 @@
+version: "3.6"
+
+services:
+
+  nginx:
+    container_name: ${APP_COMPOSE_PROJECT_NAME}_nginx
+    image: nginx
+    working_dir: '/app'
+    volumes:
+      - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./:/app:ro
+      - nginx_logs:/var/log/nginx:rw
+    depends_on:
+      - php
+    ports:
+      - ${NGINX_PORT}:80
+
+  php:
+    container_name: ${APP_COMPOSE_PROJECT_NAME}_php
+    image: docker.local/${CI_PROJECT_PATH}/php${PHP_VER}-dev:${CI_COMMIT_REF_SLUG}
+    user: 1000:${UID}
+    volumes:
+      - ~/.composer/cache/:/.composer_cache/:rw
+      - ./:/app:rw
+    working_dir: /app
+    depends_on:
+      - mysql
+      - rabbitmq
+
+  mysql:
+    container_name: ${APP_COMPOSE_PROJECT_NAME}_mysql
+    image: percona:5.6
+    volumes:
+      - ./.docker/mysql/config/my.cfg:/etc/my.cnf:ro
+      - ./.docker/mysql/initdb:/docker-entrypoint-initdb.d/:ro
+      - db_data:/var/lib/mysql/
+      - db_logs:/var/log/mysql/
+    environment:
+      MYSQL_DATABASE: 'app'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'pass'
+      MYSQL_ROOT_PASSWORD: 'pass'
+    ports:
+      - ${MYSQL_PORT:-3306}:3306
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  rabbitmq:
+    container_name: ${APP_COMPOSE_PROJECT_NAME}_rabbitmq
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - ${RABBITMQ_WEB_PORT:-15672}:15672
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  db_data:
+  db_logs:
+  rabbitmq_data:
+  nginx_logs:
