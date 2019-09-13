@@ -1,4 +1,0 @@
-[submodule ".gitlab-ci-functions"]
-	path = .gitlab-ci-functions
-	url = https://github.com/sysadmws/gitlab-ci-functions
-	branch = master
