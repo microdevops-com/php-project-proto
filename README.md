@@ -3,7 +3,7 @@ Prototype for PHP Project with GitLab Pipeline, docker-compose.yml, docker image
 
 # Usage
 - Install submodule `git submodule add --name .gitlab-ci-functions -b master -- https://github.com/sysadmws/gitlab-ci-functions .gitlab-ci-functions`
-- Substitute __RUNNER_TAG__ with needed runner tag
-- Set vars DEPLOY_SERVER, DEPLOY_URL for CI
+- Substitute `__RUNNER_TAG__` with needed runner tag
+- Set vars `DEPLOY_SERVER`, `DEPLOY_URL` for CI
 - [Symfony Install](https://symfony.com/download)  
 - Use `make help` for make commands help for docker-compose preps
