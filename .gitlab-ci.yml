@@ -101,7 +101,8 @@ simple_phpunit:
   script:
     - if [ -n "$DEPLOY_SERVER" ]; then true; else false; fi
     - if [ -n "$DEPLOY_URL" ]; then true; else false; fi
-    - salt_call_deploy $DEPLOY_SERVER $IMAGE
+    - if [ -n "$DEPLOY_APP" ]; then true; else false; fi
+    - salt_call_deploy $DEPLOY_SERVER $IMAGE $DEPLOY_APP
 
 deploy_app_proto:
   environment:
