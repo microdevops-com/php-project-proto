@@ -9,7 +9,6 @@ stages:
 
 variables:
   GIT_SUBMODULE_STRATEGY: normal
-  ENV_URL: $DEPLOY_URL
   PHP_VER: "7.3"
   DOCKER_REGISTRY_PORT: ":5001"
 
