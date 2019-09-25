@@ -14,7 +14,7 @@ variables:
 
 before_script:
   - . .gitlab-ci-functions/docker.sh
-  - . .gitlab-ci-functions/salt.sh
+  - . .gitlab-ci-functions/misc.sh
   - registry_login
 
 .base_image:
@@ -102,7 +102,7 @@ simple_phpunit:
     - if [ -n "$DEPLOY_SERVER" ]; then true; else false; fi
     - if [ -n "$DEPLOY_URL" ]; then true; else false; fi
     - if [ -n "$DEPLOY_APP" ]; then true; else false; fi
-    - salt_call_app_docker $DEPLOY_SERVER $IMAGE $DEPLOY_APP
+    - ssh_salt_call_app_docker $DEPLOY_SERVER $IMAGE $DEPLOY_APP
 
 deploy_app_proto:
   environment:
