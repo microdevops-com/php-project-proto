@@ -99,10 +99,11 @@ simple_phpunit:
   stage: app_deploy
   when: manual
   script:
-    - if [ -n "$DEPLOY_SERVER" ]; then true; else false; fi
+    - if [ -n "$DEPLOY_DOCKER_SERVER" ]; then true; else false; fi
     - if [ -n "$DEPLOY_URL" ]; then true; else false; fi
     - if [ -n "$DEPLOY_APP" ]; then true; else false; fi
-    - ssh_salt_call_app_docker $DEPLOY_SERVER $IMAGE $DEPLOY_APP
+    - ssh_salt_call_app_docker $DEPLOY_DOCKER_SERVER $IMAGE $DEPLOY_APP "/app/bin/console doctrine:schema:validate"
+    - ssh_copy_from_docker $DEPLOY_NGINX_SERVER $IMAGE app/public /var/www/$DEPLOY_APP/public 2
 
 deploy_app_proto:
   environment:
