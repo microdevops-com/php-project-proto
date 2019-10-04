@@ -9,7 +9,7 @@ FROM ${CI_SERVER_HOST}${DOCKER_REGISTRY_PORT}/$CI_PROJECT_PATH/php${PHP_VER}-com
 WORKDIR /app
 COPY . /app
 
-RUN APP_ENV=dev APP_DEBUG=1 composer install --optimize-autoloader
+RUN composer install --optimize-autoloader
 
 FROM ${CI_SERVER_HOST}${DOCKER_REGISTRY_PORT}/$CI_PROJECT_PATH/php${PHP_VER}-fpm:$CI_COMMIT_REF_SLUG
 
