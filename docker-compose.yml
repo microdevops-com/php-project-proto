@@ -26,6 +26,8 @@ services:
     depends_on:
       - mysql
       - rabbitmq
+    env_file:
+      - .env
 
   mysql:
     container_name: ${APP_COMPOSE_PROJECT_NAME}_mysql
