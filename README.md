@@ -92,7 +92,7 @@ sudo apt-get update -y
 sudo apt-get install -y docker-ce-cli docker-compose
 ```
 
-Allow your user to use docker withou sudo:
+Allow your user to use docker without sudo:
 ```
 sudo usermod -aG docker $USER
 ```
