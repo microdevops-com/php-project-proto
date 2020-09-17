@@ -13,7 +13,7 @@ Ready to use for local development on Linux, Mac, Windows and remote deploy via 
 - https://blog.jetbrains.com/phpstorm/2020/06/phpstorm-2020-1-2-is-released/
 
 ### Docker Setup
-[Check Windows 10 version requirement.](https://docs.microsoft.com/en-us/windows/wsl/install-win10#update-to-wsl-2): Running Windows 10, updated to version 1903 or higher, Build 18362 or higher for x64 systems.
+[Check Windows 10 version requirement](https://docs.microsoft.com/en-us/windows/wsl/install-win10#update-to-wsl-2): Running Windows 10, updated to version 1903 or higher, Build 18362 or higher for x64 systems.
 
 [Setup Docker version 2.3.0.5+.](https://docs.docker.com/docker-for-windows/install/) with WSL 2 enabled.
 
