@@ -54,7 +54,7 @@ composer-outdated: ## Show outdated project dependencies
 
 .PHONY: composer-validate
 composer-validate: ## Validate composer config
-	    docker-compose run --rm --no-deps php sh -lc 'composer -vvv validate --no-check-publish'
+	docker-compose run --rm --no-deps php sh -lc 'composer -vvv validate --no-check-publish'
 
 .PHONY: composer
 composer: ## Execute composer command
@@ -64,7 +64,6 @@ composer: ## Execute composer command
 console: ## execute symfony console command
 	docker-compose run --rm php sh -lc "./bin/console $(RUN_ARGS)"
 
-
 .PHONY: phpunit
 phpunit: ## execute project unit tests
 	docker-compose run --rm php sh -lc  "./bin/phpunit $(conf)"
@@ -72,7 +71,6 @@ phpunit: ## execute project unit tests
 .PHONY: lint
 lint: ## checks syntax of PHP files
 	docker-compose run --rm --no-deps php sh -lc './bin/console lint:yaml config'
-
 
 .PHONY: db
 db: ## recreate database

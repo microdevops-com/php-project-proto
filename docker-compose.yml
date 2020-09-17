@@ -22,6 +22,9 @@ services:
     volumes:
       - ~/.composer/cache/:/.composer_cache/:rw
       - ./:/app:rw
+      # ms sql specific
+      #- /etc/passwd:/etc/passwd:ro
+      #- /etc/group:/etc/group:ro
     working_dir: /app
     depends_on:
       - mysql

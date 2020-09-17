@@ -9,7 +9,7 @@ stages:
 
 variables:
   GIT_SUBMODULE_STRATEGY: normal
-  PHP_VER: "7.3"
+  PHP_VER: "7.4"
   DOCKER_REGISTRY_PORT: ":5001"
 
 before_script:
