@@ -18,13 +18,17 @@ Ready to use for local development on Linux, Mac, Windows and remote deploy via 
 [Setup Docker version 2.3.0.5+.](https://docs.docker.com/docker-for-windows/install/) with WSL 2 enabled.
 
 Reboot Windows, run Docker, allow WSL 2 kernel to be updated and restart Docker service for Windows.
+Also kernel could be [updated](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi) [manually](https://pureinfotech.com/install-windows-subsystem-linux-2-windows-10/).
 
 Check Docker in `cmd.exe`:
 - `docker ps` should work and show empty list.
 - `docker-compose` should give help.
 - `docker run --rm -it alpine sh` should run test Alpine image shell.
 
-Check once again in Docker service settings (via tray icon menu) that WSL 2 is enabled.
+Check once again in Docker service settings (via tray icon menu) that WSL 2 is enabled and via `cmd.exe` that VERSION 2 is used for Docker:
+```
+wsl --list --verbose
+```
 
 ### Ubuntu in WSL Setup
 Run `powershell.exe` as Admin.
@@ -41,6 +45,7 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 
 Set default WSL version to 2:
 ```
+wsl --set-version Ubuntu-20.04 2
 wsl --set-default-version 2
 wsl --list --verbose
 ```
