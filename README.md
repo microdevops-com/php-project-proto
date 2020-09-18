@@ -89,6 +89,12 @@ Setup needed utils:
 sudo apt install git mc vim nano build-essential apt-transport-https ca-certificates curl software-properties-common
 ```
 
+Setup git if needed:
+```
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+```
+
 Setup docker cli and docker-compose:
 ```
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
