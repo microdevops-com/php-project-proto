@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+exit 0
+
+# Just for test example
 echo "--------------------------------------------------------"
 echo "Create test database!"
 mysql \

@@ -34,7 +34,7 @@ services:
 
   mysql:
     container_name: ${APP_COMPOSE_PROJECT_NAME}_mysql
-    image: percona:5.6
+    image: percona:5.7
     volumes:
       - ./.docker/mysql/config/my.cfg:/etc/my.cnf:ro
       - ./.docker/mysql/initdb:/docker-entrypoint-initdb.d/:ro
