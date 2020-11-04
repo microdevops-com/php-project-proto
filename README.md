@@ -53,16 +53,16 @@ Install Ubuntu 20 WSL package:
 Add-AppxPackage .\Ubuntu.appx
 ```
 
+Run Ubuntu from Start menu.
+
+Give Ubuntu username and password.
+
 Set default WSL version to 2:
 ```
 wsl --set-version Ubuntu-20.04 2
 wsl --set-default-version 2
 wsl --list --verbose
 ```
-
-Run Ubuntu from Start menu.
-
-Give Ubuntu username and password.
 
 ### Link Ubuntu and Docker
 Go to Docker service settings via tray icon, select Resources, WSL Integration, enable it for Ubuntu 20.
