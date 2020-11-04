@@ -43,13 +43,6 @@ Check WSL installed:
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 ```
 
-Set default WSL version to 2:
-```
-wsl --set-version Ubuntu-20.04 2
-wsl --set-default-version 2
-wsl --list --verbose
-```
-
 Download Ubuntu 20 package omitting MS Store:
 ```
 Invoke-WebRequest -Uri https://aka.ms/wslubuntu2004 -OutFile Ubuntu.appx -UseBasicParsing
@@ -58,6 +51,13 @@ Invoke-WebRequest -Uri https://aka.ms/wslubuntu2004 -OutFile Ubuntu.appx -UseBas
 Install Ubuntu 20 WSL package:
 ```
 Add-AppxPackage .\Ubuntu.appx
+```
+
+Set default WSL version to 2:
+```
+wsl --set-version Ubuntu-20.04 2
+wsl --set-default-version 2
+wsl --list --verbose
 ```
 
 Run Ubuntu from Start menu.
