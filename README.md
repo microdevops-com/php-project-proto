@@ -57,7 +57,7 @@ Run Ubuntu from Start menu.
 
 Give Ubuntu username and password.
 
-Run Powershell again.
+Run new Powershell window again.
 
 Set default WSL version to 2:
 ```
