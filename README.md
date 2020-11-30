@@ -57,6 +57,8 @@ Run Ubuntu from Start menu.
 
 Give Ubuntu username and password.
 
+Run Powershell again.
+
 Set default WSL version to 2:
 ```
 wsl --set-version Ubuntu-20.04 2
