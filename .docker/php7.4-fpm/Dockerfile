@@ -65,6 +65,11 @@ RUN apt-get install -y libxml2-dev
 RUN docker-php-ext-install soap
 RUN docker-php-ext-enable soap
 
+# memcached
+RUN apt-get install -y libmemcached-dev
+RUN pecl install memcached
+RUN docker-php-ext-enable memcached
+
 ## mssql
 #ENV ACCEPT_EULA=Y
 #RUN apt-get install -y gnupg

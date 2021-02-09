@@ -65,6 +65,20 @@ services:
     env_file:
       - .env
 
+  memcached:
+    container_name: ${APP_COMPOSE_PROJECT_NAME}_memcached
+    image: memcached
+    hostname: memcached
+    ports:
+      - 11211:11211
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "11211" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    env_file:
+      - .env
+
   phpmyadmin:
     container_name: ${APP_COMPOSE_PROJECT_NAME}_phpmyadmin
     image: phpmyadmin/phpmyadmin

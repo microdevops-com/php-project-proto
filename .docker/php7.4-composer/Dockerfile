@@ -13,7 +13,7 @@ ENV COMPOSER_CACHE_DIR /.composer_cache
 
 RUN apt-get install -y git unzip
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.10.16
 
 #boost composer
 RUN composer -vvv global require hirak/prestissimo
