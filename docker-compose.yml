@@ -52,7 +52,6 @@ services:
   rabbitmq:
     container_name: ${APP_COMPOSE_PROJECT_NAME}_rabbitmq
     image: rabbitmq:3-management
-    hostname: rabbitmq
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     ports:
@@ -68,7 +67,6 @@ services:
   memcached:
     container_name: ${APP_COMPOSE_PROJECT_NAME}_memcached
     image: memcached
-    hostname: memcached
     ports:
       - 11211:11211
     healthcheck:
