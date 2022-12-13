@@ -86,7 +86,7 @@ lint_yaml:
 composer_validate:
   extends: .test_app_test
   script:
-    - docker run --rm -t $IMAGE composer validate --no-check-publish
+    - docker run --rm -t $IMAGE composer validate --no-check-publish  --no-interaction
 
 simple_phpunit:
   extends: .test_app_test
