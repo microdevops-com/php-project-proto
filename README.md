@@ -121,7 +121,7 @@ mountFsTab = false
 Install symfony cli:
 ```
 wget https://get.symfony.com/cli/installer -O - | sudo bash
-sudo mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+sudo mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 ```
 
 Install php cli with demo symfony project deps:
