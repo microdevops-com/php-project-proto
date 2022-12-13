@@ -171,6 +171,11 @@ cat ../php-project-proto/.gitignore >> .gitignore
 cp -R ../php-project-proto/.docker/ ../php-project-proto/.gitlab-ci.yml ../php-project-proto/Makefile ../php-project-proto/docker-compose.yml ../php-project-proto/uid.sh .
 ```
 
+Optionally delete the symfony's docker files
+```
+rm docker-compose.override.yml
+```
+
 Build and run project:
 ```
 make build
