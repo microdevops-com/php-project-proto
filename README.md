@@ -155,7 +155,7 @@ cd $MY_PRJ
 Setup symfony demo (or other symfony project type):
 ```
 symfony new --demo . # demo
-#symfony new --full . # full app
+#symfony new --webapp . # webapp
 #symfony new . # cli or microservice
 ```
 
