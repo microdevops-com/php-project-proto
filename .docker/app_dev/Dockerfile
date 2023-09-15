@@ -5,14 +5,15 @@ ARG PHP_VER
 ARG DOCKER_REGISTRY_PORT
 
 FROM ${CI_SERVER_HOST}${DOCKER_REGISTRY_PORT}/$CI_PROJECT_PATH/php${PHP_VER}-composer:$CI_COMMIT_REF_SLUG AS composer
+USER www-data:www-data
 
 WORKDIR /app
-COPY . /app
+COPY --chown=www-data:www-data . /app
 
-RUN composer install --optimize-autoloader
+RUN --mount=type=cache,uid=33,gid=33,target=/.composer_cache composer install --optimize-autoloader
 
 FROM ${CI_SERVER_HOST}${DOCKER_REGISTRY_PORT}/$CI_PROJECT_PATH/php${PHP_VER}-fpm:$CI_COMMIT_REF_SLUG
-
-COPY --from=composer /app /app
+USER www-data:www-data
+COPY --chown=www-data:www-data --from=composer /app /app
 
 WORKDIR /app/public

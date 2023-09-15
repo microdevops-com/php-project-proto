@@ -126,7 +126,7 @@ sudo mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
 Install php cli with demo symfony project deps:
 ```
-sudo apt install php7.4-cli php7.4-sqlite3 php7.4-mbstring php7.4-xml
+sudo apt install php8.1-cli php8.1-sqlite3 php8.1-mbstring php8.1-xml
 ```
 
 Install composer:
