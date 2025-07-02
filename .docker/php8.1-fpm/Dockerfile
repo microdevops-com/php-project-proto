@@ -1,6 +1,6 @@
 ARG PHP_VER
 
-FROM php:${PHP_VER}-fpm
+FROM php:${PHP_VER}-fpm-bookworm
 
 RUN apt-get -y update
 
@@ -11,7 +11,7 @@ RUN chmod +r /usr/local/etc/php/conf.d/conf.ini
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
 # curl for cmd
-RUN apt-get install -y curl
+RUN apt-get install -y curl vim htop libfcgi0ldbl
 
 # php extensions
 
@@ -25,7 +25,7 @@ RUN docker-php-ext-install bcmath
 RUN docker-php-ext-enable bcmath
 
 # sockets
-RUN docker-php-ext-install sockets
+RUN CFLAGS="$CFLAGS -D_GNU_SOURCE" docker-php-ext-install sockets
 RUN docker-php-ext-enable sockets
 
 # intl

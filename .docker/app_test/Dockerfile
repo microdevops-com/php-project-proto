@@ -9,6 +9,6 @@ USER www-data:www-data
 
 WORKDIR /app
 COPY --chown=www-data:www-data . /app
-RUN --mount=type=cache,uid=33,gid=33,target=/.composer_cache composer install
+RUN --mount=type=cache,uid=33,gid=33,target=/app/.composer composer install
 
 CMD /bin/bash

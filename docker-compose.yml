@@ -17,8 +17,7 @@ services:
 
   php:
     container_name: ${APP_COMPOSE_PROJECT_NAME}_php
-    image: docker.local/${CI_PROJECT_PATH}/php${PHP_VER}-dev:${CI_COMMIT_REF_SLUG}
-    user: 1000:${UID}
+    image: local/${CI_PROJECT_PATH}/php${PHP_VER}-dev:${CI_COMMIT_REF_SLUG}
     volumes:
       - ~/.composer/cache/:/.composer_cache/:rw
       - ./:/app:rw
