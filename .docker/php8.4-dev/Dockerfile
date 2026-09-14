@@ -9,7 +9,7 @@ FROM ${CI_SERVER_HOST}${DOCKER_REGISTRY_PORT}/$CI_PROJECT_PATH/php${PHP_VER}-com
 RUN apt-get update
 RUN apt-get install -y telnet iputils-ping
 
-RUN pecl install xdebug-3.1.2
+RUN pecl install xdebug-3.5.3
 RUN docker-php-ext-enable xdebug
 
 ARG USER_ID=33

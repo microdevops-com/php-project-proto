@@ -17,7 +17,7 @@ RUN apt-get install -y curl vim htop libfcgi0ldbl
 
 # mcrypt
 RUN apt-get install -y libmcrypt-dev
-RUN pecl install mcrypt-1.0.3
+RUN pecl install mcrypt-1.0.9
 RUN docker-php-ext-enable mcrypt
 
 # bcmath
